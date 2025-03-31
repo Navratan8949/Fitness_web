@@ -95,10 +95,10 @@ export const Navbar = () => {
           />
           <div className="flex flex-col">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-              POWER PULSE
+              MJ FITNESS
             </span>
             <span className="text-xs text-gray-400 tracking-widest -mt-1">
-              FITNESS CENTER
+              CLUB CENTER
             </span>
           </div>
         </div>

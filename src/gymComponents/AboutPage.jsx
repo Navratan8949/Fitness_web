@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import mjfit from "../assets/MJ_FITNESS_CLUB.jpg";
 
 export const AboutPage = () => {
   const [activeTab, setActiveTab] = useState("story");
@@ -19,22 +20,19 @@ export const AboutPage = () => {
       title: "Our Story",
       content:
         "Power Pulse Gym was founded in 2010 with a mission to transform the traditional gym experience. What started as a small local fitness center has grown into a community where people of all fitness levels can thrive. We believe fitness is not just about physical strength but about mental resilience and overall wellbeing.",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReK69cUuY_P5UjWOEJ_k1Zs6kFaTpAAI64UCpRn_snKgiFc0yIa2RmTSb8e4fQKe-OLUs&usqp=CAU",
+      image: mjfit,
     },
     mission: {
       title: "Our Mission",
       content:
         "We're dedicated to creating an inclusive environment where everyone feels empowered to pursue their fitness journey. Our mission is to provide state-of-the-art facilities, expert guidance, and a supportive community that inspires and motivates our members to exceed their expectations.",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReK69cUuY_P5UjWOEJ_k1Zs6kFaTpAAI64UCpRn_snKgiFc0yIa2RmTSb8e4fQKe-OLUs&usqp=CAU",
+      image: mjfit,
     },
     values: {
       title: "Our Values",
       content:
         "At Power Pulse, we operate with integrity, passion, and a commitment to excellence. We value innovation in fitness technology, personalized approaches to training, and creating genuine connections with our members. Every decision we make is guided by our commitment to your success.",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReK69cUuY_P5UjWOEJ_k1Zs6kFaTpAAI64UCpRn_snKgiFc0yIa2RmTSb8e4fQKe-OLUs&usqp=CAU",
+      image: mjfit,
     },
   };
 
@@ -91,9 +89,9 @@ export const AboutPage = () => {
               <h1 className="text-6xl font-bold leading-tight">
                 About{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-                  Power Pulse
+                  MJ Fitness
                 </span>{" "}
-                Gym
+                Club
               </h1>
               <p className="text-xl text-gray-300 leading-relaxed">
                 More than a gym, we're a fitness movement committed to

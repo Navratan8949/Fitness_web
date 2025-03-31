@@ -62,7 +62,7 @@ export const WhyUsSection = () => {
           transition={{ duration: 0.8 }}
           className="text-5xl md:text-6xl font-extrabold text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-400 to-red-400"
         >
-          Why Choose Power Pulse Gym
+          Why Choose MJ Fitness Club
         </motion.h2>
 
         {/* Grid Layout */}
