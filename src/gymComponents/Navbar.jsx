@@ -10,6 +10,9 @@ import {
   Phone,
   LogIn,
   Clock,
+  Star,
+  Package,
+  Bell,
 } from "lucide-react";
 
 export const Navbar = () => {
@@ -17,6 +20,7 @@ export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState("home");
   const [isClassesOpen, setIsClassesOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   // Handle scroll event to change navbar appearance when scrolling
   useEffect(() => {
@@ -38,6 +42,12 @@ export const Navbar = () => {
   const handleLinkClick = (link) => {
     setActiveLink(link);
     setIsMenuOpen(false);
+    setIsClassesOpen(false);
+  };
+
+  const toggleClassesMenu = (e) => {
+    e && e.preventDefault();
+    setIsClassesOpen(!isClassesOpen);
   };
 
   const navClasses = `
@@ -49,20 +59,24 @@ export const Navbar = () => {
     }
   `;
 
-  const NavLink = ({ href, icon, children, isActive, hasSubmenu }) => (
+  const NavLink = ({ href, icon, children, isActive, hasSubmenu, onClick }) => (
     <a
       href={href}
       className={`
-        relative group flex items-center px-3 py-2 rounded-lg transition duration-300
+        relative group flex items-center px-3 py-2 rounded-lg transition duration-300 text-sm md:text-base
         ${
           isActive
             ? "text-blue-400 bg-blue-900/20"
             : "text-gray-300 hover:text-blue-400 hover:bg-blue-900/10"
         }
       `}
-      onClick={() => handleLinkClick(href.substring(1))}
+      onClick={onClick || (() => handleLinkClick(href.substring(1)))}
     >
-      {icon && <span className="mr-2">{icon}</span>}
+      {icon && (
+        <span className="mr-2 transition-transform duration-300 group-hover:scale-110">
+          {icon}
+        </span>
+      )}
       <span>{children}</span>
       {hasSubmenu && (
         <ChevronDown
@@ -76,9 +90,21 @@ export const Navbar = () => {
       {/* Animated underline effect */}
       <span
         className={`
-        absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 
-        group-hover:w-full transition-all duration-300 rounded-full
-        ${isActive ? "w-full" : ""}
+        absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 
+        transition-all duration-300 rounded-full opacity-80
+        ${isActive ? "w-full" : "w-0 group-hover:w-full"}
+      `}
+      ></span>
+
+      {/* Glow effect on hover */}
+      <span
+        className={`
+        absolute inset-0 rounded-lg bg-blue-500/0 transition-all duration-300
+        ${
+          isActive
+            ? "bg-blue-500/5 shadow-inner"
+            : "group-hover:bg-blue-500/5 group-hover:shadow-inner"
+        }
       `}
       ></span>
     </a>
@@ -87,34 +113,58 @@ export const Navbar = () => {
   return (
     <nav className={navClasses}>
       <div className="container mx-auto flex justify-between items-center px-4">
-        {/* Logo */}
-        <div className="flex items-center text-white text-2xl font-bold tracking-wider group">
-          <Dumbbell
-            size={28}
-            className="mr-2 text-blue-400 transform transition duration-700 group-hover:rotate-180"
-          />
+        {/* Logo with enhanced animation */}
+        <div
+          className="flex items-center text-white text-2xl font-bold tracking-wider group cursor-pointer"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <div className="relative mr-3">
+            <Dumbbell
+              size={28}
+              className={`
+                text-blue-400 transform transition-all duration-700 
+                ${isHovered ? "rotate-180 scale-110" : ""}
+              `}
+            />
+            {/* Animated ring effect */}
+            <span
+              className={`
+              absolute inset-0 rounded-full bg-blue-500/20 
+              transition-all duration-500 
+              ${isHovered ? "scale-150 opacity-0" : "scale-100 opacity-0"}
+            `}
+            ></span>
+          </div>
           <div className="flex flex-col">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-blue-400 transition-all duration-300">
               MJ FITNESS
             </span>
-            <span className="text-xs text-gray-400 tracking-widest -mt-1">
+            <span className="text-xs text-gray-400 tracking-widest -mt-1 transition-all duration-300 group-hover:text-gray-300">
               CLUB CENTER
             </span>
           </div>
         </div>
 
-        {/* Mobile Menu Toggle */}
+        {/* Mobile Menu Toggle - Enhanced */}
         <div className="md:hidden">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="text-white bg-blue-900/30 p-2 rounded-lg focus:outline-none transition-transform duration-300 hover:bg-blue-800/30"
+            className={`
+              text-white p-2 rounded-lg focus:outline-none transition-all duration-300
+              ${
+                isMenuOpen
+                  ? "bg-red-900/30 hover:bg-red-800/40 rotate-90"
+                  : "bg-blue-900/30 hover:bg-blue-800/40"
+              }
+            `}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
-        {/* Navigation Links - Desktop */}
+        {/* Navigation Links - Desktop - Enhanced */}
         <div className="hidden md:flex items-center space-x-1">
           <NavLink
             href="#home"
@@ -132,49 +182,60 @@ export const Navbar = () => {
               hasSubmenu={true}
               onClick={(e) => {
                 e.preventDefault();
-                setIsClassesOpen(!isClassesOpen);
+                toggleClassesMenu();
               }}
             >
               Classes
             </NavLink>
 
-            {/* Classes Dropdown */}
+            {/* Enhanced Classes Dropdown */}
             <div
               className={`
-                absolute top-full right-0 mt-1 bg-gray-900/95 backdrop-blur-xl border border-blue-900/30 
+                absolute top-full right-0 mt-2 bg-gray-900/95 backdrop-blur-xl border border-blue-900/30 
                 rounded-lg shadow-xl overflow-hidden transition-all duration-300 w-48
                 ${
                   isClassesOpen
                     ? "opacity-100 translate-y-0"
-                    : "opacity-0 -translate-y-2 pointer-events-none"
+                    : "opacity-0 -translate-y-4 pointer-events-none"
                 }
               `}
             >
+              {/* Triangle indicator */}
+              <div className="absolute -top-2 right-8 w-0 h-0 border-l-8 border-r-8 border-b-8 border-transparent border-b-gray-900"></div>
+
               <div className="py-1">
-                <a
-                  href="#strength"
-                  className="block px-4 py-2 text-gray-300 hover:bg-blue-900/20 hover:text-blue-400"
-                >
-                  Strength Training
-                </a>
-                <a
-                  href="#cardio"
-                  className="block px-4 py-2 text-gray-300 hover:bg-blue-900/20 hover:text-blue-400"
-                >
-                  Cardio Classes
-                </a>
-                <a
-                  href="#yoga"
-                  className="block px-4 py-2 text-gray-300 hover:bg-blue-900/20 hover:text-blue-400"
-                >
-                  Yoga & Flexibility
-                </a>
-                <a
-                  href="#hiit"
-                  className="block px-4 py-2 text-gray-300 hover:bg-blue-900/20 hover:text-blue-400"
-                >
-                  HIIT Workouts
-                </a>
+                {[
+                  {
+                    href: "#strength",
+                    label: "Strength Training",
+                    icon: <Dumbbell size={14} />,
+                  },
+                  {
+                    href: "#cardio",
+                    label: "Cardio Classes",
+                    icon: <Star size={14} />,
+                  },
+                  {
+                    href: "#yoga",
+                    label: "Yoga & Flexibility",
+                    icon: <Package size={14} />,
+                  },
+                  {
+                    href: "#hiit",
+                    label: "HIIT Workouts",
+                    icon: <Bell size={14} />,
+                  },
+                ].map((item, index) => (
+                  <a
+                    key={index}
+                    href={item.href}
+                    className="block px-4 py-2 text-gray-300 hover:bg-blue-900/20 hover:text-blue-400 transition-colors duration-200 flex items-center"
+                    onClick={() => handleLinkClick(item.href.substring(1))}
+                  >
+                    <span className="mr-2 text-blue-400">{item.icon}</span>
+                    {item.label}
+                  </a>
+                ))}
               </div>
             </div>
           </div>
@@ -204,159 +265,151 @@ export const Navbar = () => {
           </NavLink>
         </div>
 
-        {/* Membership CTA Button */}
+        {/* Enhanced Membership CTA Button */}
         <div className="hidden md:block">
           <a
             href="#membership"
             className="
-              flex items-center bg-gradient-to-r from-blue-600 to-purple-600 
+              relative overflow-hidden flex items-center bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 
+              bg-size-200 bg-pos-0 hover:bg-pos-100
               text-white px-5 py-2 rounded-lg font-medium shadow-lg shadow-blue-900/30
-              border border-blue-400/20 transition-all duration-300 
-              hover:shadow-blue-500/40 hover:scale-105
+              border border-blue-400/20 transition-all duration-500 
+              hover:shadow-blue-500/40 hover:scale-105 group
             "
           >
-            <LogIn size={18} className="mr-2" />
+            {/* Background shine effect */}
+            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
+
+            <LogIn
+              size={18}
+              className="mr-2 transition-transform group-hover:rotate-12 duration-300"
+            />
             <span>Join Now</span>
           </a>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Enhanced Mobile Menu */}
       <div
         className={`
-          md:hidden transition-all duration-300 overflow-hidden bg-gray-900/95 border-t border-blue-900/30
-          ${isMenuOpen ? "max-h-96 py-4" : "max-h-0"}
+          md:hidden transition-all duration-500 overflow-hidden border-t border-blue-900/30
+          ${
+            isMenuOpen
+              ? "max-h-screen py-4 bg-gray-900/95 backdrop-blur-xl"
+              : "max-h-0 border-t-transparent"
+          }
         `}
       >
         <div className="container mx-auto px-4 space-y-2">
-          <a
-            href="#home"
-            className={`
-              flex items-center p-2 rounded-lg 
-              ${
-                activeLink === "home"
-                  ? "bg-blue-900/20 text-blue-400"
-                  : "text-gray-300"
-              }
-            `}
-            onClick={() => handleLinkClick("home")}
-          >
-            <Home size={18} className="mr-2" /> Home
-          </a>
+          {/* Mobile Menu Links */}
+          {[
+            { href: "#home", label: "Home", icon: <Home size={18} /> },
+            { href: "#trainers", label: "Trainers", icon: <Users size={18} /> },
+            { href: "#schedule", label: "Schedule", icon: <Clock size={18} /> },
+            { href: "#contact", label: "Contact", icon: <Phone size={18} /> },
+          ].map((item, index) => (
+            <a
+              key={index}
+              href={item.href}
+              className={`
+                flex items-center p-3 rounded-lg transition-all duration-300
+                ${
+                  activeLink === item.href.substring(1)
+                    ? "bg-blue-900/20 text-blue-400 shadow-inner shadow-blue-900/20"
+                    : "text-gray-300 hover:bg-blue-900/10 hover:text-blue-400"
+                }
+              `}
+              onClick={() => handleLinkClick(item.href.substring(1))}
+            >
+              <span className="mr-3 text-blue-400">{item.icon}</span>{" "}
+              {item.label}
+            </a>
+          ))}
 
+          {/* Classes Menu with Toggle */}
           <div>
             <div
               className={`
-                flex items-center justify-between p-2 rounded-lg cursor-pointer
+                flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all duration-300
                 ${
                   activeLink === "classes"
-                    ? "bg-blue-900/20 text-blue-400"
-                    : "text-gray-300"
+                    ? "bg-blue-900/20 text-blue-400 shadow-inner shadow-blue-900/20"
+                    : "text-gray-300 hover:bg-blue-900/10 hover:text-blue-400"
                 }
               `}
-              onClick={() => setIsClassesOpen(!isClassesOpen)}
+              onClick={toggleClassesMenu}
             >
               <div className="flex items-center">
-                <Calendar size={18} className="mr-2" /> Classes
+                <Calendar size={18} className="mr-3 text-blue-400" /> Classes
               </div>
               <ChevronDown
                 size={18}
-                className={`transition-transform duration-300 ${
+                className={`transition-transform duration-500 ${
                   isClassesOpen ? "rotate-180" : ""
                 }`}
               />
             </div>
 
-            {/* Mobile Classes Submenu */}
+            {/* Enhanced Mobile Classes Submenu */}
             <div
               className={`
-                pl-8 space-y-1 overflow-hidden transition-all duration-300
-                ${isClassesOpen ? "max-h-40 mt-1 mb-2" : "max-h-0"}
+                pl-8 space-y-1 overflow-hidden transition-all duration-500
+                ${isClassesOpen ? "max-h-60 mt-2 mb-2" : "max-h-0"}
               `}
             >
-              <a
-                href="#strength"
-                className="block p-2 text-gray-400 hover:text-blue-400 rounded-lg"
-              >
-                Strength Training
-              </a>
-              <a
-                href="#cardio"
-                className="block p-2 text-gray-400 hover:text-blue-400 rounded-lg"
-              >
-                Cardio Classes
-              </a>
-              <a
-                href="#yoga"
-                className="block p-2 text-gray-400 hover:text-blue-400 rounded-lg"
-              >
-                Yoga & Flexibility
-              </a>
-              <a
-                href="#hiit"
-                className="block p-2 text-gray-400 hover:text-blue-400 rounded-lg"
-              >
-                HIIT Workouts
-              </a>
+              {[
+                {
+                  href: "#strength",
+                  label: "Strength Training",
+                  icon: <Dumbbell size={16} />,
+                },
+                {
+                  href: "#cardio",
+                  label: "Cardio Classes",
+                  icon: <Star size={16} />,
+                },
+                {
+                  href: "#yoga",
+                  label: "Yoga & Flexibility",
+                  icon: <Package size={16} />,
+                },
+                {
+                  href: "#hiit",
+                  label: "HIIT Workouts",
+                  icon: <Bell size={16} />,
+                },
+              ].map((item, index) => (
+                <a
+                  key={index}
+                  href={item.href}
+                  className="flex items-center p-3 text-gray-400 hover:text-blue-400 rounded-lg transition-all duration-300"
+                  onClick={() => handleLinkClick(item.href.substring(1))}
+                >
+                  <span className="mr-2 text-blue-500">{item.icon}</span>{" "}
+                  {item.label}
+                </a>
+              ))}
             </div>
           </div>
 
-          <a
-            href="#trainers"
-            className={`
-              flex items-center p-2 rounded-lg 
-              ${
-                activeLink === "trainers"
-                  ? "bg-blue-900/20 text-blue-400"
-                  : "text-gray-300"
-              }
-            `}
-            onClick={() => handleLinkClick("trainers")}
-          >
-            <Users size={18} className="mr-2" /> Trainers
-          </a>
-
-          <a
-            href="#schedule"
-            className={`
-              flex items-center p-2 rounded-lg 
-              ${
-                activeLink === "schedule"
-                  ? "bg-blue-900/20 text-blue-400"
-                  : "text-gray-300"
-              }
-            `}
-            onClick={() => handleLinkClick("schedule")}
-          >
-            <Clock size={18} className="mr-2" /> Schedule
-          </a>
-
-          <a
-            href="#contact"
-            className={`
-              flex items-center p-2 rounded-lg 
-              ${
-                activeLink === "contact"
-                  ? "bg-blue-900/20 text-blue-400"
-                  : "text-gray-300"
-              }
-            `}
-            onClick={() => handleLinkClick("contact")}
-          >
-            <Phone size={18} className="mr-2" /> Contact
-          </a>
-
-          {/* Mobile Membership CTA Button */}
-          <div className="pt-2">
+          {/* Enhanced Mobile Membership CTA Button */}
+          <div className="pt-4">
             <a
               href="#membership"
               className="
-                block text-center bg-gradient-to-r from-blue-600 to-purple-600 
+                relative overflow-hidden block text-center bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600
+                bg-size-200 bg-pos-0 hover:bg-pos-100
                 text-white px-4 py-3 rounded-lg font-medium shadow-lg
-                border border-blue-400/20
+                border border-blue-400/20 transition-all duration-300 group
               "
             >
-              <LogIn size={18} className="inline-block mr-2" />
+              {/* Background shine effect */}
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
+
+              <LogIn
+                size={18}
+                className="inline-block mr-2 transition-transform group-hover:rotate-12 duration-300"
+              />
               <span>Join Now</span>
             </a>
           </div>

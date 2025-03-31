@@ -174,7 +174,7 @@ export const Footer = () => {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="text-center text-gray-500"
         >
-          <p>© 2024 Power Pulse Gym. All Rights Reserved.</p>
+          <p>© 2025 MJ Fitness Club. All Rights Reserved.</p>
           <div className="flex justify-center space-x-6 mt-4 text-sm">
             <a
               href="#"
