@@ -19,7 +19,7 @@ export const AboutPage = () => {
     story: {
       title: "Our Story",
       content:
-        "Power Pulse Gym was founded in 2010 with a mission to transform the traditional gym experience. What started as a small local fitness center has grown into a community where people of all fitness levels can thrive. We believe fitness is not just about physical strength but about mental resilience and overall wellbeing.",
+        "MJ Fitness Club was founded in 2010 with a mission to transform the traditional gym experience. What started as a small local fitness center has grown into a community where people of all fitness levels can thrive. We believe fitness is not just about physical strength but about mental resilience and overall wellbeing.",
       image: mjfit,
     },
     mission: {
@@ -31,7 +31,7 @@ export const AboutPage = () => {
     values: {
       title: "Our Values",
       content:
-        "At Power Pulse, we operate with integrity, passion, and a commitment to excellence. We value innovation in fitness technology, personalized approaches to training, and creating genuine connections with our members. Every decision we make is guided by our commitment to your success.",
+        "At MJ Fitness Club, we operate with integrity, passion, and a commitment to excellence. We value innovation in fitness technology, personalized approaches to training, and creating genuine connections with our members. Every decision we make is guided by our commitment to your success.",
       image: mjfit,
     },
   };
@@ -118,7 +118,7 @@ export const AboutPage = () => {
               <div className="relative h-[25rem] md:h-[30rem] overflow-hidden rounded-2xl mb-5 md:mb-0">
                 <img
                   src="https://5.imimg.com/data5/SELLER/Default/2024/2/384014748/BN/DD/EQ/199925747/gym-interior-designers.jpg"
-                  alt="Power Pulse Gym Interior"
+                  alt="MJ Fitness Club Interior"
                   className="w-full h-full object-cover"
                 />
                 {/* Stylized overlay */}

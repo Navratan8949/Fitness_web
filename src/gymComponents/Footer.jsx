@@ -63,7 +63,7 @@ export const Footer = () => {
           {/* Logo and Description */}
           <motion.div variants={fadeIn} className="space-y-4">
             <h3 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-red-400">
-              Power Pulse Gym
+              MJ Fitness Club
             </h3>
             <p className="text-gray-400 leading-relaxed">
               Transform your body and mind with our professional fitness

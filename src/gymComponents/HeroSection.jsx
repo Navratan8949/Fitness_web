@@ -306,7 +306,7 @@ export const HeroSection = () => {
         {/* Buttons */}
         <div className="space-x-4 sm:space-x-6 mb-12 sm:mb-16 flex justify-center flex-col sm:flex-row items-center gap-2">
           <button
-            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-full font-medium tracking-wide transition duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/30 border border-white/10 relative overflow-hidden group items-center"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white ml-5 md:ml-0 px-6 py-3 sm:px-8 sm:py-4 rounded-full font-medium tracking-wide transition duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/30 border border-white/10 relative overflow-hidden group items-center"
             onMouseEnter={(e) => {
               const button = e.currentTarget;
               const rect = button.getBoundingClientRect();

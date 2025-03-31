@@ -108,7 +108,7 @@ export const ContactSection = () => {
         {/* Enhanced Header with Gradient */}
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-400 to-red-400">
-            Contact Power Pulse Gym
+            Contact MJ Fitness Club
           </h2>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
             Reach out to us for membership inquiries, training information, or
